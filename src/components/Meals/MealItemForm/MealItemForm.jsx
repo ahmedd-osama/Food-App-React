@@ -1,16 +1,17 @@
-import React, {useRef} from 'react'
+import React, {useRef, useState} from 'react'
 import classes from './MealItemForm.module.css'
 function MealItemForm({id, cartDispatch, value}) {
   const onAdd = () => { 
-    cartDispatch({type: 'add', id: id})
+    cartDispatch({type: 'ADD', id: id})
    }
   const onRemove = () => { 
-    cartDispatch({type: 'remove', id: id})
+    cartDispatch({type: 'REMOVE', id: id})
    }
-   const handleInput =(e) => { 
-    cartDispatch({type: 'input', id: id, inputValue: e.target.value})
-    }
+  const handleInput =(e) => { 
+      cartDispatch({type: 'INPUT', id: id, inputValue: e.target.value})
+  }
   return (
+    <>
     <form className={classes['form']} onSubmit={(e)=>{e.preventDefault()}}>
       <div className={classes['input']}>
         <label htmlFor="">Amoutn:</label>
@@ -21,6 +22,7 @@ function MealItemForm({id, cartDispatch, value}) {
       <button onClick={onAdd}>+</button>
       </div>
     </form>
+    </>
   )
 }
 

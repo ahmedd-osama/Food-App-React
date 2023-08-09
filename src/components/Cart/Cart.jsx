@@ -22,24 +22,29 @@ function Cart() {
     console.log(data)
     return data;
    }
+  const hasItems = () => { 
+    return cartItems.length? true: false
+   }
+  //  maped components
+  const cartItemsElements = cartItems.map(item=> {
+    const mealInfo = getMealInfo(item.id);
+    return(
+      <CartItem key = {item.id} id = {item.id}name={mealInfo.name} cartDispatch={cartDispatch} amount={item.amount} price={mealInfo.price}></CartItem>
+    ) 
+  })
+  //JSX 
   return (
     <>
     <Modal setIsOpen={setIsOpen} isOpen = {isOpen}>
       <ul className={classes['cart-items']}>
-      {cartItems.map(item=> {
-        const mealInfo = getMealInfo(item.id);
-        return(
-          <CartItem key = {item.id} id = {item.id}name={mealInfo.name} cartDispatch={cartDispatch} amount={item.amount} price={mealInfo.price}></CartItem>
-        ) 
-      })}
+      {cartItemsElements}
       <li className={classes['only-child-block']}> <h2>You have no items in your Cart For now 😢</h2> </li>
       </ul>
       <div className={classes.total}><span>Total:</span> <span>{formateUSD(getTotalPrice())}</span></div>
       <div className={classes.actions}>
         <button onClick={()=>{setIsOpen(false)}}>Close</button>
-        <button onClick={handleCheckOut}>Checkout</button>
+        {hasItems()&& <button onClick={handleCheckOut}>Checkout</button>}
       </div>
-      
     </Modal>
     </>
   )

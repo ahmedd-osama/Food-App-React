@@ -3,10 +3,10 @@ import classes from './CartItem.module.css'
 import formateUSD from '../../../Helpers/Formaters'
 function CartItem({name, amount, cartDispatch, price , id }) {
   const onAdd = () => { 
-    cartDispatch({type: 'add', id: id})
+    cartDispatch({type: 'ADD', id: id})
    }
   const onRemove = () => { 
-    cartDispatch({type: 'remove', id: id})
+    cartDispatch({type: 'REMOVE', id: id})
    }
   return (
     <li className={classes['cart-item']}>
