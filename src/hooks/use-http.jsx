@@ -30,12 +30,13 @@ function useHTTP(options = {}) {
       console.log(response)
       let Data = await response.json();
       // setResponse(Data);
+      setIsLoading(false);
       return Data;
     } catch (err) {
       setError(true);
-      console.log(err)
+      setIsLoading(false);
+      return(err)
     }
-    setIsLoading(false);
   },[options])
   // return {response, isLoading, error, isSent, sendRequest: REQUEST} removed respnse 
   return { isLoading, error, isSent, sendRequest: REQUEST}
