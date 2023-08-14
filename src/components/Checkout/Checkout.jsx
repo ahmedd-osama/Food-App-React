@@ -8,7 +8,6 @@ function Checkout() {
   return (
     <Modal setIsOpen={setCheckout} isOpen = {checkout}>
       <Form />
-
     </Modal>
   )
 }

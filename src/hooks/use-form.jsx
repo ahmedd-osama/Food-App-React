@@ -1,7 +1,7 @@
 import React, {useState, useReducer, useEffect } from "react";
 
 const useForm = (fieldsEntries) => { 
-  const [isValid, setIsValid] = useState(true)
+  const [isValid, setIsValid] = useState()
   const [allFieldsEntries, setAllFieldsEntries] = useState(fieldsEntries)
 
   // setting FormValue state with useReducer hook
@@ -25,19 +25,23 @@ const useForm = (fieldsEntries) => {
         const newFormValue = {...formValue , [field]: value }
         return (newFormValue);
       }
-    }else if(type === 'RESET'){
+    }else if (type === 'BLUR_INPUT'){
+        const newFormValue = {...formValue , [field]: value }
+        return newFormValue
+    }else if (type === 'VALIDATE_INPUT'){
+      checkFormInput(value, field)
+  }else if(type === 'RESET'){
       setAllFieldsEntries(fieldsEntries)
       allFieldsEntries.forEach(entry=>{initialFormValue[entry.name] = entry.initialValue})
       return initialFormValue;
     }else if(type === 'CHECK'){
-      allFieldsEntries.forEach(entry=>checkFormInput(formValue.name,entry.name))
+      allFieldsEntries.forEach(entry=>checkFormInput(formValue[`${entry.name}`],entry.name))
       // checking if all values of the form are set to true in the allFormEntries state and returning the results
       let allFormIsValid = allFieldsEntries.reduce((a,b)=> {
         const aIsValid = a.isValid !== undefined ? a.isValid : true
         const bIsValid = b.isValid !== undefined ? b.isValid : true
         return aIsValid && bIsValid} , true)
-        console.log(allFormIsValid)
-      setIsValid(allFormIsValid)
+        setIsValid(allFormIsValid)
     }
     return({...formValue})
   }
@@ -61,7 +65,6 @@ const useForm = (fieldsEntries) => {
           setAllFieldsEntries(updatedFieldsEntries)
           // check if te input is conditional and return (true,false) according to the result of validation
           if (conditionalInput && (validationResult !== true)){
-            console.log(validationResult !== true)
             inputValidation = false
           }
         }
@@ -71,8 +74,19 @@ const useForm = (fieldsEntries) => {
     return inputValidation
   }
 
-  console.log('===useForm===')
-  return {allFieldsEntries, isValid, formValues: formValue, dispatch}
+  // global utilitis
+  const checkAllForm = () => {
+    allFieldsEntries.forEach(entry=>checkFormInput(formValue[`${entry.name}`],entry.name))
+    // checking if all values of the form are set to true in the allFormEntries state and returning the results
+    let allFormIsValid = allFieldsEntries.reduce((a,b)=> {
+      const aIsValid = a.isValid !== undefined ? a.isValid : true
+      const bIsValid = b.isValid !== undefined ? b.isValid : true
+      return aIsValid && bIsValid} , true)
+    setIsValid(allFormIsValid)
+    return allFormIsValid
+  }
+  // console.log('===useForm===')
+  return {allFieldsEntries, isValid, formValues: formValue, dispatch, checkAllForm}
 }
 
   export default useForm

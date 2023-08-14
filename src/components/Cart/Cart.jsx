@@ -16,30 +16,16 @@ function Cart() {
   const getMealInfo =useContext(MenuContext).getMealInfo
   const setCheckout = useContext(CartContext).setCheckout
   // fetching data from server 
-  const GetCartOptions = useMemo(() => {
-    return {
-      URL: "https://caramel-comfort-295623-default-rtdb.europe-west1.firebasedatabase.app/cart.json",
-      method: "GET",
-    };
-  }, []);
-  const {sendRequest: getCartItems, isLoading: cartIsLoading, error: cartHasError} = useHTTP(GetCartOptions)
-  useEffect(() => {
-    getCartItems().then(res => cartDispatch({type: 'FETCH', value: res['-NbkQ4A6zTbkESdEgHsV']}))
-  }, [getCartItems])
-
-  // posting to server 
-  // const postCartOptions = useMemo(() => {
+  // const GetCartOptions = useMemo(() => {
   //   return {
-  //     URL: "https://caramel-comfort-295623-default-rtdb.europe-west1.firebasedatabase.app/cart/-NbkQ4A6zTbkESdEgHsV.json",
-  //     method: "SET",
-  //     body: cartItems
+  //     URL: "https://caramel-comfort-295623-default-rtdb.europe-west1.firebasedatabase.app/cart.json",
+  //     method: "GET",
   //   };
   // }, []);
-  // const {sendRequest: postCartItems} = useHTTP(postCartOptions)
+  // const {sendRequest: getCartItems, isLoading: cartIsLoading, error: cartHasError} = useHTTP(GetCartOptions)
   // useEffect(() => {
-  //   postCartItems().then(res => console.log(res))
-  // }, [cartItems])
-  
+  //   getCartItems().then(res => cartDispatch({type: 'FETCH', value: res['-NbkQ4A6zTbkESdEgHsV']}))
+  // }, [])
   // functions
   const handleCheckOut = () => { 
     const finalCartData = cartItems.map(item=>{
@@ -50,10 +36,10 @@ function Cart() {
     setCheckout(true)
     setIsOpen(false)
     return data;
-   }
+  }
   const hasItems = () => { 
     return cartItems.length? true: false
-   }
+  }
   //  maped components
   const cartItemsElements = cartItems.map(item=> {
     const mealInfo = getMealInfo(item.id);

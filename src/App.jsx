@@ -65,12 +65,15 @@ function App() {
     if (type === 'FETCH'){
       return([...value])
     }
+    if (type === 'RESET'){
+      console.log('resetting')
+      return([])
+    }
     return [...updatedItems];
   };
   const [cartItems, cartDispatch] = useReducer(cartReducer, []);
   const [cartIsOpen, setCartIsOpen] = useState(false);
   const [checkout, setCheckout] = useState(false)
-  
   // utelity functions
   const getTotalPrice = () => {
     let totalPrice = 0;
@@ -84,6 +87,7 @@ function App() {
     let mealObject = allMeals.filter((meal) => meal.id === id)[0];
     return { ...mealObject };
   }
+  
   return (
     <>
       <MenuContext.Provider
@@ -97,7 +101,7 @@ function App() {
             setIsOpen: setCartIsOpen,
             getTotalPrice: getTotalPrice,
             checkout: checkout,
-            setCheckout: setCheckout
+            setCheckout: setCheckout,
           }}
         >
           <Header></Header>

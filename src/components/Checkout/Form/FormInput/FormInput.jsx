@@ -1,16 +1,16 @@
 import React from 'react'
 import FormInputStyle from './FormInputStyle'
-function FormInput({type, errorMessage, label, value, dispatch, name, isValid}) {
+function FormInput({type, errorMessage, label, value, dispatch, name, isValid, dispatchType}) {
   const handleInput = (e) => { 
     dispatch({
-      type: 'INPUT',
+      type: dispatchType,
       field: e.target.name,
       value: e.target.value
     })
   }
   const handleBlur = (e) => { 
     dispatch({
-      type: 'INPUT',
+      type: 'VALIDATE_INPUT',
       field: e.target.name,
       value: e.target.value
     })

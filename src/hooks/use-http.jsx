@@ -26,7 +26,7 @@ function useHTTP(options = {}) {
       if (!response.ok) {
         throw new Error("THE RESPONSE IS NOT OK!");
       }
-      console.log('-----response from useToDo -------')
+      console.log(`-----response from useHTTP ${method} -------`)
       console.log(response)
       let Data = await response.json();
       // setResponse(Data);
